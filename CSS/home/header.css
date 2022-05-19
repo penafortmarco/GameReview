@@ -1,37 +1,24 @@
 header {
-    z-index: 1;
+    z-index: 2;
     position: fixed;
     width: 100%;
-    height: 30vh;
-    background-image: url(../IMG/4kPruebaimagen.jpg);
+    height: 25vh;
+    background-image: url(/IMG/4kPruebaimagen.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }
 
-nav {
-    position: relative;
-    height: 100px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    width: 140px;
-    margin-left: 20px;
-}
-
 .banner-text {
-    padding: 0 30px;
     text-align: center;
     color: #fff;
+    justify-content: center;
+    background-size: cover;
 }
 
 .banner-text h1 {
     font-size: 50px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .banner-text span {
@@ -41,19 +28,26 @@ nav {
 .banner-text h2 {
     font-size: 16px;
     font-weight: 600;
+    padding-top: 2em;
 }
 
-#text-bar {
-    position: relative;
+.text-bar {
+    position: fixed;
+    width: 100%;
     text-align: center;
     font-size: 16px;
     color: #fff;
     background-color: rgb(31, 61, 255);
     height: 2em;
     align-items: center;
-    top: auto;
+    top: 25vh;
+    z-index: 1;
 }
 
-#text-bar:hover {
+.text-bar:hover {
     border: 1px solid rgb(31, 3, 51);
+}
+
+#divider {
+    height: 35vh;
 }

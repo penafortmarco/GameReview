@@ -1,0 +1,21 @@
+.title {
+    border-style: dashed;
+    border-color: rgba(0, 0, 0, 0.436);
+    text-align: center;
+    width: 57%;
+    position: relative;
+    margin: 0 auto;
+    padding: 7px;
+}
+
+.title h1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.title span {
+    color: rgb(29, 29, 255);
+    font-size: 125%;
+
+}

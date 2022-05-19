@@ -7,36 +7,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameReview</title>
     <link rel="stylesheet" href="./CSS/main.css">
-    <link rel="stylesheet" href="./CSS/header.css">
-    <link rel="stylesheet" href="./CSS/nav.css">
-    <link rel="stylesheet" href="./CSS/grid.css">
+    <link rel="stylesheet" href="./CSS/home/header.css">
+    <link rel="stylesheet" href="./CSS/home/nav.css">
+    <link rel="stylesheet" href="./CSS/home/grid.css">
+    <link rel="stylesheet" href="./CSS/home/elements.css">
     <script src="https://kit.fontawesome.com/2cb25f2c39.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <header>
-        <nav>
+        <div>
+            <nav>
+                <input type="checkbox" id="check">
+                <label for="check" class="bar-btn">
+                    <i class="fas fa-bars"></i>
+                </label>
+                <ul class="nav-menu">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Sobre nosotros</a></li>
+                    <li><a href="#">Contenido</a></li>
+                    <li><a href="#">Sugerencias</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </nav>
             <div>
-                <img src="IMG/LogoMakr-6zua8X.png" alt="" class="logo">
+                <div class="banner-text">
+                    <h1>Game<span>Review</span></h1>
+                    <h2>Recuerda que GameReview nunca te dirá spoilers sin avisarte</h2>
+                </div>
             </div>
-            <input type="checkbox" id="check">
-            <label for="check" class="bar-btn">
-                <i class="fas fa-bars"></i>
-            </label>
-            <ul class="nav-menu">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Sobre nosotros</a></li>
-                <li><a href="#">Contenido</a></li>
-                <li><a href="#">Sugerencias</a></li>
-                <li><a href="#">Contacto</a></li>
-            </ul>
-        </nav>
-        <div class="banner-text">
-            <h2>Titulo de prueba</h2>
-            <h1>Titulo de <span>prueba</span> 2</h1>
-        </div>
-        <div id="text-bar">Todo lo que debes saber antes de jugar</div>
     </header>
+    <div class="text-bar">
+        <p>Todo lo que debes saber antes de jugar</p>
+    </div>
+    <div id="divider"></div>
+    <div class="title">
+        <h1>Chequea nuestras <span>reseñas</span> más recientes</h1>
+    </div>
+
     <div class="grid">
         <div class="grid-element">
             <h2>Red Dead Redemption</h2>
