@@ -1,0 +1,75 @@
+.container {
+  width: 90%;
+
+  padding: 10px 40px;
+}
+
+.container .swiper-container {
+  width: 100%;
+  height: 100%;
+}
+
+.container .swiper-slide {
+  position: relative;
+  text-align: center;
+  font-size: 18px;
+  background: rgb(255, 223, 223);
+  border-radius: 15px;
+  text-align: start;
+  box-shadow: 2px 2px 5px rgba(2, 2, 2, 0.8);
+
+}
+
+.container .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+
+}
+
+.container .swiper-slide .card-description {
+  padding: 1rem 1rem;
+}
+
+.container .swiper-slide .card-title,
+.container .swiper-slide .card-text {
+  margin-bottom: .5rem;
+}
+
+.container .swiper-slide .card-link {
+  text-align: center;
+
+}
+
+.container .swiper-slide .card-link a {
+  text-decoration: none;
+  color: rgb(31, 61, 255);
+}
+
+.swiper-button-next {
+  right: 26px !important;
+}
+
+.swiper-button-prev {
+  left: 26px !important;
+}
+
+.swiper-wrapper :hover {
+  cursor: pointer;
+}
+
+
+.have-spoiler-alert {
+  font-size: medium;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: rgb(209, 23, 23);
+}
+
+.no-spoiler-alert {
+  font-size: medium;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: rgb(11, 209, 18);
+}
