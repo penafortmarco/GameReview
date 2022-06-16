@@ -1,10 +1,10 @@
 $(document).ready(function () {
     reviewTable = $("#reviewTable").DataTable({
-        "columnDefs": [{
-            "targets": -1,
-            "data": null,
-            "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btnEdit'>Editar</button><button class='btn btn-danger btnDelete'>Borrar</button></div></div>"
-        }],
+        /* "columnDefs": [{
+             "targets": -1,
+             "data": null,
+             // "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btnEdit'>Editar</button><button class='btn btn-danger btnDelete'>Borrar</button></div></div>"
+         }],*/
 
         //Para cambiar el lenguaje a español
         "language": {
@@ -82,7 +82,6 @@ $(document).ready(function () {
         if (document.getElementById('spoiler').checked) { spoiler = 1 }
         else { spoiler = 0 }
         image = $("#image").val();
-        console.log(spoiler);
         $.ajax({
             url: "./bd/crud.php",
             type: "POST",
@@ -102,8 +101,5 @@ $(document).ready(function () {
             }
         });
         $("#modalCRUD").modal("hide");
-        console.log(image);
-
     });
-
 });

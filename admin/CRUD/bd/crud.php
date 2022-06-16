@@ -4,17 +4,19 @@ include_once './connection.php';
 
 $bdc = new DbConnection();
 $connection = $bdc->Connect();
-$id = (isset($_POST['id'])) ? $_POST['id'] : '';
-$title = (isset($_POST['title'])) ? $_POST['title'] : '';
-$description = (isset($_POST['description'])) ? $_POST['description'] : '';
-$spoiler =  (isset($_POST['spoiler'])) ? $_POST['spoiler'] : '';
+
+$id = $_POST['id'];
+$title = $_POST['title'];
+$description = $_POST['description'];
+$spoiler =  $_POST['spoiler'];
 $date = date('d-m-y');
 
+echo $image;
 
 switch ($_POST['option']) {
 
     case 1:
-        $sql = "INSERT INTO reviews (title, text, spoiler, date) VALUES ('$title', '$description', '$spoiler', '$date')";
+        $sql = "INSERT INTO reviews (title, text, image, spoiler, date) VALUES ('$title', '$description', '$image', '$spoiler', '$date')";
         mysqli_query($connection, $sql);
 
         $sql = "SELECT id, title, spoiler, date, text FROM reviews ORDER BY id DESC LIMIT 1";

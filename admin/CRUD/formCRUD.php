@@ -1,5 +1,9 @@
 <?php
+session_start();
 include_once './bd/connection.php';
+if (!isset($_SESSION['user'])) {
+    header('Location:../../index.php');
+}
 $connection = new DbConnection();
 $dbc = $connection->Connect();
 $q = "SELECT * FROM reviews";
@@ -71,7 +75,7 @@ $reviewQuery = $dbc->query($q);
                                 <td>' . $registerReviews['title'] . '</td>
                                 <td>' . $spoiler . '</td>
                                 <td>' . $registerReviews['date'] . '</td>
-                                <td>' . '</td>
+                                <td>' . "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btnEdit'>Editar</button><button class='btn btn-danger btnDelete'>Borrar</button></div></div>" . '</td>
                             </tr>';
                             }
                             ?>
@@ -91,7 +95,7 @@ $reviewQuery = $dbc->query($q);
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="formReview" class="form">
+                <form id="formReview" class="form" method="POST" action="./bd/crud.php" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="title" class="col-form-label">Título:</label>
