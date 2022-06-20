@@ -1,10 +1,10 @@
 $(document).ready(function () {
     reviewTable = $("#reviewTable").DataTable({
-        /* "columnDefs": [{
-             "targets": -1,
-             "data": null,
-             // "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btnEdit'>Editar</button><button class='btn btn-danger btnDelete'>Borrar</button></div></div>"
-         }],*/
+        "columnDefs": [{
+            "targets": -1,
+            "data": null,
+            "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btnEdit'>Editar</button><button class='btn btn-danger btnDelete'>Borrar</button></div></div>"
+        }],
 
         //Para cambiar el lenguaje a español
         "language": {
@@ -43,12 +43,28 @@ $(document).ready(function () {
         title = row.find('td:eq(1)').text();
         spoiler = row.find('td:eq(2)').text();
         description = '';
-
-
+        /*
+          option = 0;
+          $.ajax({
+              url: "./bd/crud.php",
+              type: "POST",
+              dataType: "json",
+              data: { option: option, id: id },
+              success: function (data) {
+                  id = data.id;
+                  title = data.title;
+                  spoiler = data.spoiler;
+                  image = data.image;
+                  console.log("registro editado");
+                  console.log(data);
+              }
+          });
+          */
+        option = 2; //editar
         $("#title").val(title);
         $("#description").val(description);
         $("#spoiler").val(spoiler);
-        option = 2; //editar
+        $("#image").val("");
 
         $(".modal-header").css("background-color", "#007bff");
         $(".modal-header").css("color", "white");
@@ -81,23 +97,35 @@ $(document).ready(function () {
         description = $.trim($("#description").val());
         if (document.getElementById('spoiler').checked) { spoiler = 1 }
         else { spoiler = 0 }
-        image = $("#image").val();
+        image = $("#image")[0].files;
+
+        var formData = new FormData(this);
+        formData.append('id', id);
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('spoiler', spoiler);
+        formData.append('image', image[0]);
+        formData.append('option', option);
         $.ajax({
             url: "./bd/crud.php",
             type: "POST",
             dataType: "json",
-            data: { id: id, title: title, description: description, image: image, spoiler: spoiler, option: option },
+            processData: false,
+            contentType: false,
+            async: false,
+            cache: false,
+            data: formData,
             success: function (data) {
-                console.log(data);
-                id = data[0];
-                title = data[1];
-                spoiler = data[2];
+                id = data.id;
+                title = data.title;
+                spoiler = data.spoiler;
                 if (spoiler == 1) { spoiler = "Sí" }
                 else { spoiler = "No" }
-                date = data[3];
+                date = data.date;
                 if (option == 1) { reviewTable.row.add([id, title, spoiler, date]).draw(); }
                 else { reviewTable.row(row).data([id, title, spoiler, date]).draw(); }
                 console.log("registro guardado");
+                console.log(data);
             }
         });
         $("#modalCRUD").modal("hide");

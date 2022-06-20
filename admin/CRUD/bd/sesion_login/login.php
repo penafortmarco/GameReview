@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (isset($_SESSION['user'])) {
+    header('Location:../../formCRUD.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

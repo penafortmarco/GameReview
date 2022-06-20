@@ -18,7 +18,7 @@ $reviewQuery = $dbc->query($q);
     <link rel="stylesheet" href="./CSS/home/nav.css">
     <link rel="stylesheet" href="./CSS/home/grid.css">
     <link rel="stylesheet" href="./CSS/elements.css">
-    <link rel="stylesheet" href="./CSS/home/section.css">
+
     <link rel="stylesheet" href="/panel/panel.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <script src="https://kit.fontawesome.com/2cb25f2c39.js" crossorigin="anonymous"></script>
@@ -68,7 +68,7 @@ $reviewQuery = $dbc->query($q);
                         $spoiler = '<a class="no-spoiler-alert">Sin spoilers</a>';
                     }
                     echo '<div class="swiper-slide">
-                    <img src="/panel/img/construction-image.jpg" alt="">
+                    <img src="/panel/img/' . $registerReviews['image'] . '" alt="">
                     <div class="card-description">
                         <div class="card-title">
                             <h4>' . $registerReviews['title'] . '</h4>
