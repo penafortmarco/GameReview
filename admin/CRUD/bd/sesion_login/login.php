@@ -20,11 +20,16 @@ if (isset($_SESSION['user'])) {
 <body>
     <form class="form-register" action="./log.php" method="POST">
         <h4>Inicia sesión</h4>
+        <?php
+        if (isset($_GET['e'])) {
+            echo "<p style= 'margin-bottom: 4px'>" . $_GET['e'] . '</p>';
+        }
+        ?>
         <input class="controls" id="nombres" name="user" type="text" placeholder="Nombre de usuario">
         <input class="controls" id="correo" name="password" type="password" placeholder="Contraseña">
         <p>Esta opción es solo para administradores.</p>
         <input class="botons" type="submit" value="Iniciar sesión">
-        <p><a href="../index.html">Volver al Home</a></p>
+        <p><a href="../../../../index.php">Volver al Home</a></p>
     </form>
 </body>
 

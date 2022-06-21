@@ -16,10 +16,10 @@ $reviewQuery = $dbc->query($q);
     <link rel="stylesheet" href="./CSS/main.css">
     <link rel="stylesheet" href="./CSS/home/header.css">
     <link rel="stylesheet" href="./CSS/home/nav.css">
-    <link rel="stylesheet" href="./CSS/home/grid.css">
     <link rel="stylesheet" href="./CSS/elements.css">
+    <link rel="stylesheet" href="./panel/card-panel.css">
+    <link rel="stylesheet" href="./CSS/home/footer.css">
 
-    <link rel="stylesheet" href="/panel/panel.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <script src="https://kit.fontawesome.com/2cb25f2c39.js" crossorigin="anonymous"></script>
 </head>
@@ -35,8 +35,7 @@ $reviewQuery = $dbc->query($q);
                 <ul class="nav-menu">
                     <li><a href="#">Home</a></li>
                     <li><a href="/admin/CRUD/bd/sesion_login/login.php">Iniciar sesión</a></li>
-                    <li><a href="#">Sobre nosotros</a></li>
-                    <li><a href="#">Contacto</a></li>
+                    <li><a href="#footer">Sobre nosotros</a></li>
                 </ul>
             </nav>
             <div>
@@ -45,55 +44,71 @@ $reviewQuery = $dbc->query($q);
                     <h2>Recuerda que GameReview nunca te dirá spoilers sin avisarte</h2>
                 </div>
             </div>
+            <div class="text-bar">
+                <p>Todo lo que debes saber antes de jugar</p>
+            </div>
     </header>
-    <div class="text-bar">
-        <p>Todo lo que debes saber antes de jugar</p>
-    </div>
     <div id="divider"></div>
     <div class="title">
         <h1>Chequea nuestras <span>reseñas</span></h1>
     </div>
 
-    <div class="container">
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-container mySwiper">
-            <div class="swiper-wrapper body-panel">
-                <?php
-                while ($registerReviews = $reviewQuery->fetch_array(MYSQLI_BOTH)) {
-                    $spoiler = $registerReviews['spoiler'];
-                    if ($spoiler == 1) {
-                        $spoiler = '<a class="have-spoiler-alert">Con spoilers</a>';
-                    } else {
-                        $spoiler = '<a class="no-spoiler-alert">Sin spoilers</a>';
-                    }
-                    echo '<div class="swiper-slide">
-                    <img src="/panel/img/' . $registerReviews['image'] . '" alt="">
-                    <div class="card-description">
-                        <div class="card-title">
-                            <h4>' . $registerReviews['title'] . '</h4>
-                            <a>' . $spoiler . '</a>
-                        </div>
-                        <div class="card-text">
-                            <p>Publicada el ' . $registerReviews['date'] . '</p>
-                            <br>
-                        </div>
-                        <div>
-                            <p>' . $registerReviews['text'] . '</p>
-                            
-                        </div>
-                    </div>
-                </div>';
-                }
-                ?>
 
+    <div class="all-elements">
+        <?php
+        while ($registerReviews = $reviewQuery->fetch_array(MYSQLI_BOTH)) {
+            $spoiler = $registerReviews['spoiler'];
+            if ($spoiler == 1) {
+                $spoiler = '<a class="have-spoiler-alert">SPOILERS</a>';
+            } else {
+                $spoiler = '<a class="no-spoiler-alert">SIN SPOILERS</a>';
+            }
+            echo '
+        <div class="card">
+            <div class="face front">
+                <img src="/panel/img/' . $registerReviews['image'] . '" alt="">
+                <h3>' . $registerReviews['title'] . '</h3>
+                <p>' . $spoiler . '</p>
+            </div>
+            <div class="face back">
+                <h3>' . $registerReviews['title'] . '</h3>
+                <p>' . $registerReviews['text'] . '</p>
+                <div class="link">
+                    <a><span>Publicada el ' . $registerReviews['date'] . '</span></a>
+                </div>
+            </div>
+        </div>';
+        }
+        ?>
+    </div>
+    <footer class="pie-pagina" id="footer">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a>
+                        <p>GameReview es un sitio web independiente que busca exponer críticas constructivas acerca de
+                            videojuegos de todo
+                            tipo.</p>
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>GAME REVIEW</h2>
+                <p>Recuerda que nunca te diremos un spoiler sin antes avisarte. ¡Diviertete!</p>
+            </div>
+            <div class="box">
+                <h2>Contacta al programador:</h2>
+                <div class="red-social">
+                    <a href="https://github.com/penafortmarco" class="fa fa-github"></a>
+                    <a href="https://www.linkedin.com/in/marcopenafort/" class="fa fa-linkedin"></a>
+                    <p>penafortmarco@gmail.com</p>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- Swiper JS -->
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="/panel/panel.js"></script>
-
+        <div class="grupo-2">
+            <small>Las reviews son escritas por el WebMaster y administrador del stio.</small>
+        </div>
+    </footer>
 </body>
 
 </html>
