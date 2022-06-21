@@ -25,12 +25,14 @@ if (isset($_SESSION['user'])) {
             echo "<p style= 'margin-bottom: 4px'>" . $_GET['e'] . '</p>';
         }
         ?>
-        <input class="controls" id="nombres" name="user" type="text" placeholder="Nombre de usuario">
-        <input class="controls" id="correo" name="password" type="password" placeholder="Contraseña">
+        <input class="controls" id="name" name="user" type="text" placeholder="Nombre de usuario">
+        <input class="controls" id="password" name="password" type="password" placeholder="Contraseña">
+        <p id="error-msg">La contraseña es demasiado corta.</p>
         <p>Esta opción es solo para administradores.</p>
-        <input class="botons" type="submit" value="Iniciar sesión">
+        <input class="botons" type="submit" value="Iniciar sesión" id="log-btn">
         <p><a href="../../../../index.php">Volver al Home</a></p>
     </form>
+    <script src="login.js"></script>
 </body>
 
 </html>
