@@ -6,8 +6,6 @@ button.disabled = true;
 button.style.cursor = 'auto';
 inputPassw.onkeyup = function () { Compare(); }
 
-console.log("hola");
-
 function Compare() {
 
     if (inputPassw.value.length < 8) {

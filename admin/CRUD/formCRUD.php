@@ -122,6 +122,7 @@ $reviewQuery = $dbc->query($q);
             </div>
         </div>
     </div>
+    <a href="/admin/CRUD/bd/sesion_login/close.php">Cerrar Sessión</a>
 
     <!-- jQuery, Bootstrap JS -->
     <script src="jquery/jquery-3.3.1.min.js"></script>

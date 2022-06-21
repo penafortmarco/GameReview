@@ -41,30 +41,11 @@ $(document).ready(function () {
         row = $(this).closest("tr");
         id = parseInt(row.find('td:eq(0)').text());
         title = row.find('td:eq(1)').text();
-        spoiler = row.find('td:eq(2)').text();
         description = '';
-        /*
-          option = 0;
-          $.ajax({
-              url: "./bd/crud.php",
-              type: "POST",
-              dataType: "json",
-              data: { option: option, id: id },
-              success: function (data) {
-                  id = data.id;
-                  title = data.title;
-                  spoiler = data.spoiler;
-                  image = data.image;
-                  console.log("registro editado");
-                  console.log(data);
-              }
-          });
-          */
+
         option = 2; //editar
         $("#title").val(title);
         $("#description").val(description);
-        $("#spoiler").val(spoiler);
-        $("#image").val("");
 
         $(".modal-header").css("background-color", "#007bff");
         $(".modal-header").css("color", "white");

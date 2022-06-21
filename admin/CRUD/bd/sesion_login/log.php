@@ -1,16 +1,15 @@
 <?php
 require_once '../connection.php';
-$bdc = new DbConnection();
-$connection = $bdc->Connect();
+$connection = new DbConnection();
+$dbc = $connection->Connect();
 
 $user = $_POST["user"];
 $password = $_POST["password"];
-
 $q = "SELECT*FROM useradmin where user='$user' and password='$password'";
-$result = mysqli_query($connection, $q);
+$userQuery = $dbc->query($q);
+$result = $userQuery->fetch_array(MYSQLI_BOTH);
 
-
-if ($result && $user == 'admin' && $password == '123456789') {
+if ($result && $user == $result['user'] && $password == $result['password']) {
     session_start();
     $_SESSION['user'] = $user;
     header("Location:../../formCRUD.php");
