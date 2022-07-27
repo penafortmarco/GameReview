@@ -2,9 +2,6 @@
 include_once 'admin/CRUD/bd/connection.php';
 $connection = new DbConnection();
 $dbc = $connection->Connect();
-if (!$_GET) {
-    header('Location:index.php?page=1');
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +32,7 @@ if (!$_GET) {
                     <i class="fas fa-bars"></i>
                 </label>
                 <ul class="nav-menu">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="index.php?page=0">Home</a></li>
                     <li><a href="/admin/CRUD/bd/sesion_login/login.php">Iniciar sesión</a></li>
                     <li><a href="#footer">Sobre nosotros</a></li>
                 </ul>
@@ -54,37 +51,40 @@ if (!$_GET) {
     <div class="title">
         <h1>Chequea nuestras <span>reseñas</span> más recientes</h1>
     </div>
+    <form action="index.php" method="POST">
+        <div class="search">
+            <input type="text" name="search" placeholder="Buscar reseña" required>
+            <i>
+                <input type="submit" value="Buscar"> 
+            </i>       
+        </div>
+    </form>
+ 
+
     <div class="all-elements">
         <?php
-        //calcula la cantidad de elementos totales en la tabla.
-        $q = "SELECT * FROM reviews";
-        $reviewQuery = $dbc->query($q);
-        $totalElements = mysqli_num_rows($reviewQuery);
-        $totalView = 8; //Establece el N máximo de elementos en la vista. 
-        $pages = ceil($totalElements / $totalView);
-        //<------------------------------------------------------------------------------------->//
-        //Validaciones.
-        if ($_GET['page'] <= 0) {
-            header('Location:index.php?page=1');
-        }
-        if ($_GET['page'] > $pages) {
-            header('Location:index.php?page='.$pages);
-        }
-        //<------------------------------------------------------------------------------------->//
-        //Selecciona a los elementos mostrados en cada página.
-        $init = ($_GET['page'] - 1) * $totalView;
-        $q = "SELECT * FROM reviews ORDER BY id DESC LIMIT $init, $totalView";
-        $reviewQuery = $dbc->query($q);
-        //<------------------------------------------------------------------------------------->//
-        //Trae a la vista a todos los elementos de la db.
-        while ($registerReviews = $reviewQuery->fetch_array(MYSQLI_BOTH)) {
-            $spoiler = $registerReviews['spoiler'];
-            if ($spoiler == 1) {
-                $spoiler = '<a class="have-spoiler-alert">SPOILERS</a>';
-            } else {
-                $spoiler = '<a class="no-spoiler-alert">SIN SPOILERS</a>';
+        if (isset($_POST['search'])) {
+            $userSearch = $_POST['search'];
+            if (!ctype_alpha($userSearch)){
+                $userSearch = '';
             }
-            echo '
+
+
+            $q = "SELECT * FROM reviews WHERE title LIKE '%$userSearch%'";
+            $reviewQuery = $dbc->query($q);
+            $totalElements = mysqli_num_rows($reviewQuery);
+
+            if ($totalElements == 0) {
+                echo "<p>No hay resultados.</p>";
+            } else {
+                while ($registerReviews = $reviewQuery->fetch_array(MYSQLI_BOTH)) {
+                    $spoiler = $registerReviews['spoiler'];
+                    if ($spoiler == 1) {
+                        $spoiler = '<a class="have-spoiler-alert">SPOILERS</a>';
+                    } else {
+                        $spoiler = '<a class="no-spoiler-alert">SIN SPOILERS</a>';
+                    }
+                    echo '
                 <div class="card">
                     <div class="face front">
                         <img src="/panel/img/' . $registerReviews['image'] . '" alt="">
@@ -99,48 +99,90 @@ if (!$_GET) {
                             </div>
                     </div>
                 </div>';
+                }
+            }
+        } else {
+            //calcula la cantidad de elementos totales en la tabla.
+            $q = "SELECT * FROM reviews";
+            $reviewQuery = $dbc->query($q);
+            $totalElements = mysqli_num_rows($reviewQuery);
+            $totalView = 8; //Establece el N máximo de elementos en la vista. 
+            $pages = ceil($totalElements / $totalView);
+            //<------------------------------------------------------------------------------------->//
+            //Validaciones.
+            if ($_GET['page'] <= 0) {
+                header('Location:index.php?page=1');
+            }
+            if ($_GET['page'] > $pages) {
+                header('Location:index.php?page=' . 1);
+            }
+            //<------------------------------------------------------------------------------------->//
+            //Selecciona a los elementos mostrados en cada página.
+            $init = ($_GET['page'] - 1) * $totalView;
+            $q = "SELECT * FROM reviews ORDER BY id DESC LIMIT $init, $totalView";
+            $reviewQuery = $dbc->query($q);
+            //<------------------------------------------------------------------------------------->//
+            //Trae a la vista a todos los elementos de la db.
+            while ($registerReviews = $reviewQuery->fetch_array(MYSQLI_BOTH)) {
+                $spoiler = $registerReviews['spoiler'];
+                if ($spoiler == 1) {
+                    $spoiler = '<a class="have-spoiler-alert">SPOILERS</a>';
+                } else {
+                    $spoiler = '<a class="no-spoiler-alert">SIN SPOILERS</a>';
+                }
+                echo '
+                <div class="card">
+                    <div class="face front">
+                        <img src="/panel/img/' . $registerReviews['image'] . '" alt="">
+                        <h3>' . $registerReviews['title'] . '</h3>
+                        <p>' . $spoiler . '</p>
+                    </div>
+                    <div class="face back">
+                        <h3>' . $registerReviews['title'] . '</h3>
+                        <p>' . $registerReviews['text'] . '</p>
+                            <div class="link">
+                                <a><span>Publicada el ' . $registerReviews['date'] . '</span></a>
+                            </div>
+                    </div>
+                </div>';
+            }
+            echo '
+ <nav aria-label="...">
+ <ul class="pagination justify-content-center">
+     <li class="page-item';
+         //Deshabilita el botón en caso de no haber más páginas hacia atrás.
+         echo $_GET['page'] <= 1 ? 'disabled' : '' . '">';
+         echo '<a class="page-link" href="index.php?page=' . $_GET['page'] - 1 . '">';
+         echo '
+             Anterior
+         </a>
+     </li>';
+
+    for ($i = 0; $i < $pages; $i++){
+        //Genera la vista de N páginas.
+        echo '<li class="page-item '; 
+        echo $_GET['page'] == $i + 1 ? 'active' : '';
+        echo '">';
+        echo '
+             <a class="page-link" href="index.php?page=' . $i + 1 . '">';
+                echo $i + 1 . '
+             </a>
+         </li>';
+    }
+    echo '
+     <li class="page-item';
+         //Deshabilita el botón en caso de no haber más páginas hacia atrás.
+         echo $_GET['page'] >= $pages ? 'disabled' : '' . '">';
+         echo '<a class="page-link" href="index.php?page=' . $_GET['page'] + 1 . '">';
+         echo '
+             Siguiente
+         </a>
+     </li>
+ </ul>
+</nav>';
         }
         ?>
     </div>
-    <nav aria-label="...">
-        <ul class="pagination justify-content-center">
-            <li class="page-item
-                <?php
-                //Deshabilita el botón en caso de no haber más páginas hacia atrás.
-                echo $_GET['page'] <= 1 ? 'disabled' : ''
-                ?>
-            ">
-                <a class="page-link" href="index.php?page=<?php echo $_GET['page'] - 1 ?>">
-                    Anterior
-                </a>
-            </li>
-
-            <?php for ($i = 0; $i < $pages; $i++) : //Genera la vista de N páginas.
-            ?>
-                <li class="page-item 
-                    <?php
-                    //Selecciona la vista de la página actual.
-                    echo $_GET['page'] == $i + 1 ? 'active' : ''
-                    ?> ">
-                    <a class="page-link" href="index.php?page=<?php echo $i + 1 ?>">
-                        <?php echo $i + 1 ?>
-                    </a>
-                </li>
-            <?php endfor ?>
-
-            <li class="page-item
-                <?php
-                //Deshabilita el botón en caso de no haber más páginas hacia atrás.
-                echo $_GET['page'] >= $pages ? 'disabled' : ''
-                ?>
-            ">
-                <a class="page-link" href="index.php?page=
-                    <?php echo $_GET['page'] + 1 ?>">
-                    Siguiente
-                </a>
-            </li>
-        </ul>
-    </nav>
 
     <footer class="pie-pagina" id="footer">
         <div class="grupo-1">

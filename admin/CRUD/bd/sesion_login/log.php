@@ -9,6 +9,12 @@ $q = "SELECT*FROM useradmin where user='$user' and password='$password'";
 $userQuery = $dbc->query($q);
 $result = $userQuery->fetch_array(MYSQLI_BOTH);
 
+if(strlen($user) > 12 or strlen($password) > 12){
+    $user = '';
+    $password = '';
+}
+
+
 if ($result && $user == $result['user'] && $password == $result['password']) {
     session_start();
     $_SESSION['user'] = $user;
